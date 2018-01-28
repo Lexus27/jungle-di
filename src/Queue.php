@@ -11,7 +11,7 @@ namespace Jungle\DependencyInjection;
  * Class Queue
  * @package Jungle\DependencyInjection
  */
-class Queue extends QueueAbstract implements Container{
+class Queue extends QueueAbstract{
 
 	const BASE_DEFAULT  = 'default';
 	const BASE_SELF     = 'self';

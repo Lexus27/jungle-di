@@ -81,7 +81,7 @@ class SimpleContainer implements Container{
 	}
 
 	/**
-	 * @return $this
+	 * @return Container
 	 */
 	public function getBase(){
 		return $this->base?:$this;

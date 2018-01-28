@@ -11,7 +11,7 @@ namespace Jungle\DependencyInjection;
  * Class QueueAbstract
  * @package Jungle\DependencyInjection
  */
-abstract class QueueAbstract{
+abstract class QueueAbstract implements Container{
 
 	const DEFAULT_ID        = 'default';
 	const DEFAULT_PRIORITY  = 0.0;
@@ -48,6 +48,11 @@ abstract class QueueAbstract{
 	}
 
 	/**
+	 *
+	 * Выставляет состояние($container) иньекции $injection_id
+	 * Если под этим идентификатором уже был ранее выставлен контейнер, то сохраняет его в историю
+	 * @see restore ($injection_id) - Возвращяет предыдущий сохраненный контейнер
+	 *
 	 * @param $injection_id
 	 * @param Container $container
 	 * @param $priority
@@ -108,6 +113,10 @@ abstract class QueueAbstract{
 
 
 	/**
+	 *
+	 * При смене состояния иньекции, старое состояние сохраняется в (@see injections_history ) под $injection_id.
+	 * Операция (@see restore ) - возвращает предыдущее состояние иньекции $injection_id
+	 *
 	 * @param $injection_id
 	 * @return Container|null
 	 */

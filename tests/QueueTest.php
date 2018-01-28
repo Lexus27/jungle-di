@@ -11,6 +11,7 @@ use Jungle\DependencyInjection\Queue;
 
 class QueueTest extends \PHPUnit_Framework_TestCase{
 
+	
 	public function testQueue(){
 		$queue = new Queue();
 
@@ -31,33 +32,66 @@ class QueueTest extends \PHPUnit_Framework_TestCase{
 
 	public function testQueueComplex(){
 		$queue = new Queue();
-
+		
+		/**
+		 * Queue:
+		 * 1: @last
+		 * 2: @second
+		 * 3: @first
+		 * 4: @default
+		 */
+		
 		$queue->setDefault($default = new SimpleContainer());
-
+		
+		
 		$queue->inject('last'   , $last     = new SimpleContainer() , 1);
 		$queue->inject('second' , $second   = new SimpleContainer() , 5);
 		$queue->inject('first'  , $first    = new SimpleContainer() , 10);
 
+		
+		
+		
 		$c1 = new \stdClass();
 		$c1->a = 1;
 
 		$c2 = new \stdClass();
 		$c2->a = 5;
-
-		$queue->getInjection('first')->set('std', $c2);
-		$queue->getInjection('last')->set('std', $c1);
-
+		
+		
+		/**
+		 * Set in @first: "std" = {a: 5}
+		 */
+		$queue->getInjection('first')
+			->set('std', $c2);
+		
+		
+		/**
+		 * Set in @last: "std" = {a: 1}
+		 */
+		$queue->getInjection('last')
+			->set('std', $c1);
+		
+		
+		/**
+		 * @var \stdClass $service
+		 */
 		$service = $queue->get('std');
-
-		$this->assertEquals('stdClass', get_class($service) );
+		$this->assertInstanceOf(\stdClass::class, $service );
 		$this->assertEquals(5, $service->a);
-
-
-		$queue->restore('first'); // restore, equal remove injection if before not injected
-
+		
+		
+		/**
+		 * restore prev state for 'first' injection
+		 * else if prev state not exists then will removed current 'first'
+		 */
+		$queue->restore('first');
+		
+		
+		/**
+		 * @var \stdClass $service
+		 */
 		$service = $queue->get('std');
-
-		$this->assertEquals('stdClass', get_class($service));
+		$this->assertInstanceOf(\stdClass::class, $service );
 		$this->assertEquals(1, $service->a);
 	}
 

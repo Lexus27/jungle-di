@@ -6,10 +6,14 @@
 
 namespace Jungle\DependencyInjection\Exceptions;
 
-
-use Jungle\DependencyInjection\Container;
 use Jungle\DependencyInjection\DIException;
 
+
+/**
+ * @Author: Alexey Kutuzov <lexus27.khv@gmail.com>
+ * Class ServiceNotFoundException
+ * @package Jungle\DependencyInjection\Exceptions
+ */
 class ServiceNotFoundException extends DIException implements ServiceAwareException{
 
 	/** @var int  */

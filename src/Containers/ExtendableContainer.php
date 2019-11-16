@@ -35,10 +35,11 @@ class ExtendableContainer extends DefinableContainer{
 	}
 
 
-	/**
-	 * @param $identifier
-	 * @return null|object
-	 */
+    /**
+     * @param $identifier
+     * @return null|object
+     * @throws \Jungle\DependencyInjection\DIException
+     */
 	public function get($identifier){
 		$service = parent::get($identifier);
 		if(!$service && $this->ancestor){
